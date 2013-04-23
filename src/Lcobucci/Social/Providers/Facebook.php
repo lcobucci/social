@@ -56,14 +56,14 @@ class Facebook extends OAuth2
         );
 
         $response = $request->send();
-        $user = json_decode($response->getBody(true));
+        $user = $response->json();
 
         return new User(
-            $user->id,
-            $user->username,
-            $user->name,
-            isset($user->email) ? $user->email : $user->username . '@facebook.com',
-            'https://graph.facebook.com/' . $user->username . '/picture'
+            $user['id'],
+            $user['username'],
+            $user['name'],
+            isset($user['email']) ? $user['email'] : $user['username'] . '@facebook.com',
+            'https://graph.facebook.com/' . $user['username'] . '/picture'
         );
     }
 }

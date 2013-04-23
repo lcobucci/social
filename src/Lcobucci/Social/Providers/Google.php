@@ -29,17 +29,17 @@ class Google extends OAuth2
      */
     protected function createToken(Response $response)
     {
-        $authData = json_decode($response->getBody(true));
+        $authData = $response->json();
 
-        if (isset($authData->error)) {
-            throw new OAuthException($authData->error_description);
+        if (isset($authData['error'])) {
+            throw new OAuthException($authData['error_description']);
         }
 
         return new AccessToken(
-            $authData->access_token,
-            $authData->token_type,
+            $authData['access_token'],
+            $authData['token_type'],
             array(),
-            (int) $authData->expires_in
+            (int) $authData['expires_in']
         );
     }
 
@@ -70,14 +70,14 @@ class Google extends OAuth2
         );
 
         $response = $request->send();
-        $user = json_decode($response->getBody(true));
+        $user = $response->json();
 
         return new User(
-            $user->id,
-            $user->email,
-            $user->name,
-            $user->email,
-            $user->picture
+            $user['id'],
+            $user['email'],
+            $user['name'],
+            $user['email'],
+            $user['picture']
         );
     }
 }

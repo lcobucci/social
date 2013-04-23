@@ -55,14 +55,14 @@ class Github extends OAuth2
         );
 
         $response = $request->send();
-        $user = json_decode($response->getBody(true));
+        $user = $response->json();
 
         return new User(
-            $user->id,
-            $user->login,
-            $user->name,
-            $user->email,
-            $user->avatar_url
+            $user['id'],
+            $user['login'],
+            $user['name'],
+            $user['email'],
+            $user['avatar_url']
         );
     }
 }
