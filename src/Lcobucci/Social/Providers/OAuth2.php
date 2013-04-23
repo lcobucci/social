@@ -77,13 +77,8 @@ abstract class OAuth2 implements Provider
     */
     public function retrieveToken($code)
     {
-        $request = $this->httpClient->post(
-            $this->getTokenEndpoint(),
-            array(
-                'Content-Type' => 'application/x-www-form-urlencoded'
-            ),
-            http_build_query($this->createTokenParameters($code))
-        );
+        $request = $this->httpClient->post($this->getTokenEndpoint());
+        $request->addPostFields($this->createTokenParameters($code));
 
         return $this->createToken($request->send());
     }
