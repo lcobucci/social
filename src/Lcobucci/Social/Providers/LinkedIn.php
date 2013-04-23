@@ -49,7 +49,8 @@ class LinkedIn extends OAuth2
     public function getUser(AccessToken $token)
     {
         $request = $this->httpClient->get(
-            'https://api.linkedin.com/v1/people/~:(id,first-name,last-name)?oauth2_access_token=' . $token->getToken()
+            'https://api.linkedin.com/v1/people/~:(id,formatted-name,'
+            . 'picture-url)?oauth2_access_token=' . $token->getToken()
         );
 
         $response = $request->send();
@@ -58,7 +59,9 @@ class LinkedIn extends OAuth2
         return new User(
             (string) $user->id,
             null,
-            $user->{'first-name'} . ' ' . $user->{'last-name'}
+            (string) $user->{'formatted-name'},
+            null,
+            (string) $user->{'picture-url'}
         );
     }
 }
