@@ -1,0 +1,26 @@
+{
+    "name": "lcobucci/social",
+    "description": "Social authenticator",
+    "type": "library",
+    "authors": [{
+            "name": "Luís Otávio Cobucci Oblonczyk",
+            "email": "lcobucci@gmail.com"
+        }
+    ],
+    "keywords": [
+        "authentication", "oauth", "twitter", "google", "facebook", "github"
+    ],
+    "homepage": "http://lcobucci.github.io/action-mapper/",
+    "license": [
+        "BSD-3-Clause"
+    ],
+    "require": {
+        "php": ">=5.3",
+        "guzzle/guzzle": ">=3.4"
+    },
+    "autoload": {
+        "psr-0": {
+            "Lcobucci\\Social": "src/"
+        }
+    }
+}
