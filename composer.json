@@ -10,7 +10,6 @@
     "keywords": [
         "authentication", "oauth", "twitter", "google", "facebook", "github"
     ],
-    "homepage": "http://lcobucci.github.io/action-mapper/",
     "license": [
         "BSD-3-Clause"
     ],
