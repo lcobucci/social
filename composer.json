@@ -8,7 +8,7 @@
         }
     ],
     "keywords": [
-        "authentication", "oauth", "twitter", "google", "facebook", "github"
+        "authentication", "oauth", "twitter", "google", "facebook", "github", "linkedin", "openid"
     ],
     "license": [
         "BSD-3-Clause"
