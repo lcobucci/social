@@ -1,12 +1,12 @@
 <?php
 namespace Lcobucci\Social\Providers;
 
-use Lcobucci\Social\OAuth\AccessToken;
-use Lcobucci\Social\OAuth\OAuthException;
 use Guzzle\Http\Message\Response;
-use Lcobucci\Social\User;
+use Lcobucci\Social\OAuth2\AccessToken;
+use Lcobucci\Social\OAuth2\BaseProvider;
+use Lcobucci\Social\OAuth2\User;
 
-class Google extends OAuth2
+class Google extends BaseProvider
 {
     /**
      * {@inheritdoc}
@@ -30,10 +30,7 @@ class Google extends OAuth2
     protected function createToken(Response $response)
     {
         $authData = $response->json();
-
-        if (isset($authData['error'])) {
-            throw new OAuthException($authData['error_description']);
-        }
+        $this->raiseException($authData);
 
         return new AccessToken(
             $authData['access_token'],
@@ -73,6 +70,7 @@ class Google extends OAuth2
         $user = $response->json();
 
         return new User(
+            $token,
             $user['id'],
             $user['email'],
             $user['name'],

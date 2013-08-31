@@ -1,15 +1,12 @@
 <?php
 namespace Lcobucci\Social\Providers;
 
-use Lcobucci\Social\User;
-
-use Lcobucci\Social\OAuth\AccessToken;
-
-use Lcobucci\Social\OAuth\OAuthException;
-
 use Guzzle\Http\Message\Response;
+use Lcobucci\Social\OAuth2\AccessToken;
+use Lcobucci\Social\OAuth2\BaseProvider;
+use Lcobucci\Social\OAuth2\User;
 
-class Live extends OAuth2
+class Live extends BaseProvider
 {
     /**
      * {@inheritdoc}
@@ -41,10 +38,7 @@ class Live extends OAuth2
     protected function createToken(Response $response)
     {
         $authData = $response->json();
-
-        if (isset($authData['error'])) {
-            throw new OAuthException($authData['error']);
-        }
+        $this->raiseException($authData);
 
         return new AccessToken(
             $authData['access_token'],
@@ -68,6 +62,7 @@ class Live extends OAuth2
         $user = $response->json();
 
         return new User(
+            $token,
             $user['id'],
             $user['emails']['preferred'],
             $user['name'],

@@ -1,48 +1,32 @@
 <?php
 namespace Lcobucci\Social;
 
-class User
+abstract class User
 {
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $login;
+    protected $username;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      */
-    private $avatar;
-
-    /**
-     * @param string $id
-     * @param string $login
-     * @param string $name
-     * @param string $email
-     * @param string $avatar
-     */
-    public function __construct($id, $login, $name, $email = null, $avatar = null)
-    {
-        $this->id = $id;
-        $this->login = $login;
-        $this->name = $name;
-        $this->email = $email;
-        $this->avatar = $avatar;
-    }
+    protected $avatar;
 
     /**
      * @return string
@@ -55,9 +39,9 @@ class User
     /**
      * @return string
      */
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
     /**

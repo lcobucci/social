@@ -1,5 +1,5 @@
 <?php
-namespace Lcobucci\Social\OAuth;
+namespace Lcobucci\Social\OAuth2;
 
 class AccessToken
 {

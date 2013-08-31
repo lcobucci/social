@@ -1,12 +1,12 @@
 <?php
 namespace Lcobucci\Social\Providers;
 
-use Lcobucci\Social\OAuth\OAuthException;
-use Lcobucci\Social\OAuth\AccessToken;
 use Guzzle\Http\Message\Response;
-use Lcobucci\Social\User;
+use Lcobucci\Social\OAuth2\AccessToken;
+use Lcobucci\Social\OAuth2\BaseProvider;
+use Lcobucci\Social\OAuth2\User;
 
-class Facebook extends OAuth2
+class Facebook extends BaseProvider
 {
     /**
      * {@inheritdoc}
@@ -30,10 +30,7 @@ class Facebook extends OAuth2
     protected function createToken(Response $response)
     {
         parse_str($response->getBody(true), $authData);
-
-        if (isset($authData['error'])) {
-            throw new OAuthException($authData['error_description']);
-        }
+        $this->raiseException($authData);
 
         return new AccessToken(
             $authData['access_token'],
@@ -59,6 +56,7 @@ class Facebook extends OAuth2
         $user = $response->json();
 
         return new User(
+            $token,
             $user['id'],
             $user['username'],
             $user['name'],

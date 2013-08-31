@@ -1,13 +1,11 @@
 <?php
-namespace Lcobucci\Social\Providers;
+namespace Lcobucci\Social\OAuth2;
 
-use Lcobucci\Social\OAuth\AccessToken;
 use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Message\Response;
-use Lcobucci\Social\OAuth\Client;
-use Lcobucci\Social\Provider;
+use Lcobucci\Social\Exceptions\OAuthException;
 
-abstract class OAuth2 implements Provider
+abstract class BaseProvider implements Provider
 {
     /**
      * @var Client
@@ -20,12 +18,36 @@ abstract class OAuth2 implements Provider
     protected $httpClient;
 
     /**
-     * @param Client $client
-     * @param HttpClient $client
+     * @param string $clientId
+     * @param string $clientSecret
+     * @param string $redirectUri
+     * @param array $defaultScopes
+     * @return BaseProvider
      */
-    public function __construct(Client $client, HttpClient $httpClient)
+    public static function create(
+        $clientId,
+        $clientSecret,
+        $redirectUri = null,
+        array $defaultScopes = array()
+    ) {
+        return new static(
+            new Client($clientId, $clientSecret, $redirectUri, $defaultScopes)
+        );
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function __construct(Client $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * @see \Lcobucci\Social\Provider::setHttpClient()
+     */
+    public function setHttpClient(HttpClient $httpClient)
+    {
         $this->httpClient = $httpClient;
     }
 
@@ -62,6 +84,8 @@ abstract class OAuth2 implements Provider
         if ($state) {
             $params['state'] = $state;
         }
+
+        $scopes = array_merge($this->client->getDefaultScopes(), $scopes);
 
         if ($scopes && isset($scopes[0])) {
             $params['scope'] = implode(' ', $scopes);
@@ -101,6 +125,20 @@ abstract class OAuth2 implements Provider
         }
 
         return $params;
+    }
+
+    /**
+     * @param array $data
+     * @throws OAuthException
+     */
+    protected function raiseException(array $data)
+    {
+        if (isset($data['error'])) {
+            throw OAuthException::createFromError(
+                $data['error'],
+                isset($data['error_description']) ? $data['error_description'] : null
+            );
+        }
     }
 
     /**

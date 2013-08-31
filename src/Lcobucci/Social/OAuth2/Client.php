@@ -1,5 +1,5 @@
 <?php
-namespace Lcobucci\Social\OAuth;
+namespace Lcobucci\Social\OAuth2;
 
 class Client
 {
@@ -19,15 +19,26 @@ class Client
     private $redirectUri;
 
     /**
+     * @var array
+     */
+    private $defaultScopes;
+
+    /**
      * @param string $id
      * @param string $secret
      * @param string $redirectUri
+     * @param array $defaulScopes
      */
-    public function __construct($id, $secret, $redirectUri = null)
-    {
+    public function __construct(
+        $id,
+        $secret,
+        $redirectUri = null,
+        array $defaulScopes = array()
+    ) {
         $this->id = $id;
         $this->secret = $secret;
         $this->redirectUri = $redirectUri;
+        $this->defaultScopes = $defaulScopes;
     }
 
     /**
@@ -52,5 +63,13 @@ class Client
     public function getRedirectUri()
     {
         return $this->redirectUri;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultScopes()
+    {
+        return $this->defaultScopes;
     }
 }

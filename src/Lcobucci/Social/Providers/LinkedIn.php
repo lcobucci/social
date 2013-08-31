@@ -1,12 +1,12 @@
 <?php
 namespace Lcobucci\Social\Providers;
 
-use Lcobucci\Social\OAuth\OAuthException;
-use Lcobucci\Social\OAuth\AccessToken;
 use Guzzle\Http\Message\Response;
-use Lcobucci\Social\User;
+use Lcobucci\Social\OAuth2\AccessToken;
+use Lcobucci\Social\OAuth2\BaseProvider;
+use Lcobucci\Social\OAuth2\User;
 
-class LinkedIn extends OAuth2
+class LinkedIn extends BaseProvider
 {
     /**
      * {@inheritdoc}
@@ -30,10 +30,7 @@ class LinkedIn extends OAuth2
     protected function createToken(Response $response)
     {
         $authData = $response->json();
-
-        if (isset($authData['error'])) {
-            throw new OAuthException($authData['error']);
-        }
+        $this->raiseException($authData);
 
         return new AccessToken(
             $authData['access_token'],
@@ -57,6 +54,7 @@ class LinkedIn extends OAuth2
         $user = $response->xml();
 
         return new User(
+            $token,
             (string) $user->id,
             null,
             (string) $user->{'formatted-name'},
