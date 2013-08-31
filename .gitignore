@@ -1,0 +1,6 @@
+/.settings
+/vendor
+/public
+/.buildpath
+/.project
+/composer.phar

@@ -1,0 +1,33 @@
+{
+	"name" : "lcobucci/social",
+	"description" : "Social authentication library for PHP 5.3+",
+	"type" : "library",
+	"authors" : [{
+			"name" : "Luís Otávio Cobucci Oblonczyk",
+			"email" : "lcobucci@gmail.com"
+		}
+	],
+	"keywords" : [
+		"authentication",
+		"oauth",
+		"twitter",
+		"google",
+		"facebook",
+		"github",
+		"linkedin",
+		"live"
+	],
+	"license" : [
+		"BSD-3-Clause"
+	],
+	"require" : {
+		"symfony/http-foundation" : ">=2.3",
+		"guzzle/guzzle" : ">=3.7",
+		"php" : ">=5.3"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Lcobucci\\Social" : "src/"
+		}
+	}
+}
