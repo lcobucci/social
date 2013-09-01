@@ -25,6 +25,19 @@ class LinkedIn extends BaseProvider
     }
 
     /**
+     * @param array $scopes
+     * @param string $state
+     * @return array
+     */
+    protected function createAuthorizationParameters(array $scopes, $state)
+    {
+        $scopes[] = 'r_basicprofile';
+        $scopes[] = 'r_emailaddress';
+
+        return parent::createAuthorizationParameters($scopes, $state);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function createToken(Response $response)
@@ -52,14 +65,27 @@ class LinkedIn extends BaseProvider
 
         $response = $request->send();
         $user = $response->xml();
+        $email = $this->getEmail($token);
 
         return new User(
             $token,
             (string) $user->id,
-            null,
+            $email,
             (string) $user->{'formatted-name'},
-            null,
+            $email,
             (string) $user->{'picture-url'}
         );
+    }
+
+    protected function getEmail(AccessToken $token)
+    {
+        $request = $this->httpClient->get(
+            'https://api.linkedin.com/v1/people/~/email-address?oauth2_access_token='
+            . $token->getToken()
+        );
+
+        $response = $request->send();
+
+        return (string) $response->xml();
     }
 }
