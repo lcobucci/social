@@ -71,11 +71,11 @@ class Google extends BaseProvider
 
         return new User(
             $token,
-            $user['id'],
-            $user['email'],
-            $user['name'],
-            $user['email'],
-            $user['picture']
+            isset($user['id']) ? $user['id'] : null,
+            isset($user['email']) ? $user['email'] : null,
+            isset($user['name']) ? $user['name'] : null,
+            isset($user['email']) ? $user['email'] : null,
+            isset($user['picture']) ? $user['picture'] : null
         );
     }
 }
