@@ -57,9 +57,9 @@ class Facebook extends BaseProvider
 
         return new User(
             $token,
-            $user['id'],
-            $user['username'],
-            $user['name'],
+            isset($user['id']) ? $user['id'] : null,
+            isset($user['username']) ? $user['username'] : null,
+            isset($user['name']) ? $user['name'] : null,
             isset($user['email']) ? $user['email'] : $user['username'] . '@facebook.com',
             'https://graph.facebook.com/' . $user['username'] . '/picture'
         );

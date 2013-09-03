@@ -63,10 +63,10 @@ class Live extends BaseProvider
 
         return new User(
             $token,
-            $user['id'],
-            $user['emails']['preferred'],
-            $user['name'],
-            $user['emails']['preferred']
+            isset($user['id']) ? $user['id'] : null,
+            isset($user['emails']['preferred']) ? $user['emails']['preferred'] : null,
+            isset($user['name']) ? $user['name'] : null,
+            isset($user['emails']['preferred']) ? $user['emails']['preferred'] : null
         );
     }
 }

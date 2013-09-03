@@ -69,11 +69,11 @@ class LinkedIn extends BaseProvider
 
         return new User(
             $token,
-            (string) $user->id,
+            isset($user->id) ? (string) $user->id : null,
             $email,
-            (string) $user->{'formatted-name'},
+            isset($user->{'formatted-name'}) ? (string) $user->{'formatted-name'} : null,
             $email,
-            (string) $user->{'picture-url'}
+            isset($user->{'picture-url'}) ? (string) $user->{'picture-url'} : null
         );
     }
 

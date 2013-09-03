@@ -56,11 +56,11 @@ class Github extends BaseProvider
 
         return new User(
             $token,
-            $user['id'],
-            $user['login'],
-            $user['name'],
-            $user['email'],
-            $user['avatar_url']
+            isset($user['id']) ? $user['id'] : null,
+            isset($user['login']) ? $user['login'] : null,
+            isset($user['name']) ? $user['name'] : null,
+            isset($user['email']) ? $user['email'] : null,
+            isset($user['avatar_url']) ? $user['avatar_url'] : null
         );
     }
 }
