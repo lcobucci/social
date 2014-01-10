@@ -66,3 +66,6 @@ var_dump($user->getName()); // Get the user name
 var_dump($user->getEmail()); // Get the user email
 var_dump($user->getAvatar()); // Get the user avatar
 ```
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lcobucci/social/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
