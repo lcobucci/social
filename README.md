@@ -3,6 +3,8 @@ social
 
 Social authentication library for PHP 5.3+
 
+**THIS PROJECT IS NO LONGER MAINTAINED**
+
 ## Instalation
 
 Social should be installed using [composer](https://packagist.org/packages/lcobucci/social).
